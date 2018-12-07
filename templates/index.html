@@ -11,6 +11,14 @@
     <form action="/test" method="post">
       <button name="post_value" value="from post">post submit</button>
     </form>
+      
+<img src="{{url_for('static', filename='snake.jpg')}}" alt="snake" />
+<ul>
+    {% for content in contents %}
+    <li><a href="{{url_for('show_content', title=content.title)}}">{{content.title}}</a></li>
+    {% endfor%}
+</ul>
+      
     <p>{{ s }}</p>
     <hr>
 
