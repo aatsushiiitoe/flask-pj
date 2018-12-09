@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, abort
 from flaski.models import WikiContent
 from flaski.database import db_session
 from datetime import datetime
-
+import form
 
 app = Flask(__name__)
 
@@ -20,6 +20,8 @@ def index():
     dic = {"name":"John", "age":24}
     bl = True
     contents = WikiContent.query.all()
+    print(form.output_text().output_date(1)) # 外部ファイル呼び出し
+    print ("debug:indexの処理")
     return render_template('index.html', s=s, lis=lis, dic=dic, bl=bl, contents=contents)
 
 
