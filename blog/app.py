@@ -57,6 +57,7 @@ oembed_providers = bootstrap_basic(OEmbedCache())
 
 class Entry(flask_db.Model):
     title = CharField()
+    link = CharField()
     slug = CharField(unique=True)
     content = TextField()
     published = BooleanField(index=True)
@@ -194,6 +195,7 @@ def index():
 def _create_or_edit(entry, template):
     if request.method == 'POST':
         entry.title = request.form.get('title') or ''
+        entry.link = request.form.get('link') or ''
         entry.content = request.form.get('content') or ''
         entry.published = request.form.get('published') or False
         if not (entry.title and entry.content):
@@ -218,7 +220,7 @@ def _create_or_edit(entry, template):
 @app.route('/create/', methods=['GET', 'POST'])
 @login_required
 def create():
-    return _create_or_edit(Entry(title='', content=''), 'create.html')
+    return _create_or_edit(Entry(title='',link='', content=''), 'create.html')
 
 @app.route('/drafts/')
 @login_required
