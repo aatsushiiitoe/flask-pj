@@ -9,17 +9,21 @@
         <th>date</th>
         <th>操作</th>
     </tr>
+    {% for result in results %}
     <tr>
-        <td>0</td>
-        <td>サンプルタイトル</td>
-        <td>2020/01/01 12:00</td>
+        <td>{{ result.id }}</td>
+        <td>{{ result.title|safe}}</td>
+        <td>{{ result.created }}</td>
         <td>
-            <a href="/delete/0">削除</a>
-            <a href="/view/0">参照</a>
+            <a href="/view/{{ result.id }}"><button class="btn btn-primary">参照</button></a>
+            <form action="/delete/{{ result.id }}" style="display: inline" method="post">
+                <input class="btn btn-danger" type="submit" value="削除" onclick='return confirm("削除しますがよろしいですか？")';>
+            </form>
+ 
         </td>
     </tr>
+    {% endfor %}
  
 </table>
- 
  
 {% endblock %}

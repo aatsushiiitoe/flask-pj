@@ -15,21 +15,11 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
- 
-<header>
-    <div class="navbar navbar-dark bg-dark box-shadow">
-        <div class="container d-flex justify-content-between">
-            <a href="/" class="navbar-brand d-flex align-items-center">
-                <strong>簡易分析ツール</strong>
-            </a>
-        </div>
-    </div>
-</header>
- 
 <div class="container">
-    {% block body %}
-    {% endblock %}
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    {% block body %}{% endblock %}
 </div>
-</body>
+
 </html>
