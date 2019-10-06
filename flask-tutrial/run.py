@@ -51,12 +51,13 @@ def analysis():
     """ 分析実行処理 """
  
     title = request.form['title']
+    desc = request.form['desc']
     data = request.form['data']
     img = models.create_scatter(data)
  
     con = get_db()
  
-    pk = models.insert(con, title, data, img)
+    pk = models.insert(con, title,desc, data, img)
     flash('登録処理が完了しました。')    # ←ここを追記
     return redirect(url_for('view', pk=pk)) 
  

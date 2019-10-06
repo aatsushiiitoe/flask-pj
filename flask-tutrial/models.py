@@ -33,10 +33,10 @@ def create_scatter(data):
  
     return url
 
-def insert(con, title, data, img):
+def insert(con, title, desc, data, img):
     """ INSERT処理 """
     cur = con.cursor()
-    cur.execute('insert into results (title, data, img) values (?, ?, ?)', [title, data, img])
+    cur.execute('insert into results (title,desc, data, img) values (?,?, ?, ?)', [title,desc, data, img])
  
     pk = cur.lastrowid
     con.commit()
@@ -45,12 +45,12 @@ def insert(con, title, data, img):
 
 def select(con, pk):
     """ 指定したキーのデータをSELECTする """
-    cur = con.execute('select id, title, data, img, created from results where id=?', (pk,))
+    cur = con.execute('select id, title, desc, data, img, created from results where id=?', (pk,))
     return cur.fetchone()
 
 def select_all(con):
     """ SELECTする """
-    cur = con.execute('select id, title, data, img, created from results order by id desc')
+    cur = con.execute('select id, title,desc, data, img, created from results order by id desc')
     return cur.fetchall()
 
 def delete(con, pk):
