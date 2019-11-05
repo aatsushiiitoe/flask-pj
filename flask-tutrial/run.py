@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 from flask import Flask, request, g, redirect, url_for, render_template, flash
 import sqlite3
@@ -10,17 +11,14 @@ app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'db.sqlite3'),
     SECRET_KEY='foo-baa',
 ))
-# 以下、DB接続関連の関数
  
 def connect_db():
-    """ データベス接続に接続します """
     con = sqlite3.connect(app.config['DATABASE'])
     con.row_factory = sqlite3.Row
     return con
  
  
 def get_db():
-    """ connectionを取得します """
     if not hasattr(g, 'sqlite_db'):
         g.sqlite_db = connect_db()
     return g.sqlite_db
@@ -28,27 +26,22 @@ def get_db():
  
 @app.teardown_appcontext
 def close_db(error):
-    """ db接続をcloseします """
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
  
- ##ルーティング--------------------------------------------------
 @app.route('/')
 def index():
-    """ 一覧画面 """
     con = get_db()
     results = models.select_all(con)
     return render_template('index.html', results=results)
  
 @app.route('/create')
 def create():
-    """ 新規作成画面 """
     return render_template('edit.html')
  
  
 @app.route('/analysis', methods=['POST'])
 def analysis():
-    """ 分析実行処理 """
  
     title = request.form['title']
     desc = request.form['desc']
@@ -58,25 +51,22 @@ def analysis():
     con = get_db()
  
     pk = models.insert(con, title,desc, data, img)
-    flash('登録処理が完了しました。')    # ←ここを追記
+    flash('登録処理が完了しました。')    
     return redirect(url_for('view', pk=pk)) 
  
 @app.route('/delete/<pk>', methods=['POST'])
 def delete(pk):
-    """ 結果削除処理 """
     con = get_db()
     models.delete(con, pk)
-    flash('削除処理が完了しました。')    # ←ここを追記
+    flash('削除処理が完了しました。')    
     return redirect(url_for('index'))
 
 @app.route('/view/<pk>')
 def view(pk):
-    """ 結果参照処理 """
     con = get_db()
     result = models.select(con, pk)
     return render_template('view.html', result=result)
 
 
- ##サーバー起動
 if __name__ == '__main__':
     app.run(host="127.0.0.1", port=8080, debug=True)
