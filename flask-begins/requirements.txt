@@ -64,7 +64,7 @@ six==1.11.0
 snowballstemmer==1.2.1
 SQLAlchemy==1.2.14
 tensorboard==1.7.0
-tensorflow==1.4.0
+tensorflow==1.15.0
 tensorflow-hub==0.1.0
 tensorflow-tensorboard==0.4.0rc3
 termcolor==1.1.0
